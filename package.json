@@ -1,20 +1,22 @@
 {
   "name": "product-placeholder",
-  "version": "1.0.0",
-  "description": "Product placeholder images with transparent backgrounds for in-development e-commerce websites",
-  "main": "index.js",
-  "repository": "https://github.com/bclarkau/product-placeholder.git",
-  "author": "Ben Clark <ben@benclark.dev>",
-  "license": "MIT",
+  "private": true,
   "scripts": {
-    "serve": "webpack serve --mode=development",
-    "dev": "webpack --mode=development",
-    "prod": "webpack --mode=production"
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "next": "12.0.5",
+    "react": "17.0.2",
+    "react-dom": "17.0.2"
   },
   "devDependencies": {
-    "copy-webpack-plugin": "^10.0.0",
-    "webpack": "^5.64.4",
-    "webpack-cli": "^4.9.1",
-    "webpack-dev-server": "^4.6.0"
+    "@types/node": "16.11.11",
+    "@types/react": "17.0.37",
+    "eslint": "8.4.0",
+    "eslint-config-next": "12.0.5",
+    "typescript": "4.5.2"
   }
 }
