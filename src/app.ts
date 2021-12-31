@@ -12,6 +12,15 @@ app.get('/', (req, res) => {
 app.get('/:width([0-9]+)', (req, res) => {
 	const { width } = req.params
 
+	getImageBuffer(
+		{ width: parseInt(width), height: parseInt(width) }, 
+		(buffer) => {
+			res.type('png').end(buffer)
+		}, 
+		(err) => {
+			res.status(500).type('png').end()
+		}
+	)
 })
 
 app.get('/:width([0-9]+)/:height([0-9]+)', (req, res) => {
@@ -23,7 +32,6 @@ app.get('/:width([0-9]+)/:height([0-9]+)', (req, res) => {
 			res.type('png').end(buffer)
 		}, 
 		(err) => {
-			console.error('ERROR HERE', err)
 			res.status(500).type('png').end()
 		}
 	)
