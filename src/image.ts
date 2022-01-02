@@ -3,6 +3,7 @@ import { fabric } from 'fabric'
 type GetImageBufferProps = {
 	width: number
 	height: number
+	padding: number
 	min?: number
 	max?: number
 }
@@ -16,7 +17,7 @@ type GetImageBufferErrorProps = {
 }
 
 export const getImageBuffer = (
-	{ width, height, min = 100, max = 1000 }: GetImageBufferProps, 
+	{ width, height, padding, min = 100, max = 1000 }: GetImageBufferProps, 
 	onDone: GetImageBufferCallbackProps, 
 	onError: GetImageBufferErrorProps
 ) => {
@@ -31,15 +32,16 @@ export const getImageBuffer = (
 		}
 	
 		// calculate image size and position
-		const aspectRatio = Math.min(maxWidth / imgWidth, maxHeight / imgHeight)
-		const scaledWidth = imgWidth * aspectRatio
-		const scaledHeight = imgHeight * aspectRatio
+		const scale = Math.min(maxWidth / imgWidth, maxHeight / imgHeight)
+		const scaledWidth = (imgWidth * scale) - (padding * 2)
+		const scaledHeight = (imgHeight * scale) - (padding * 2)
 		const left = (maxWidth > scaledWidth) ? ((Math.round(maxWidth) - Math.round(scaledWidth)) / 2) : 0
 		const top = (maxHeight > scaledHeight) ? ((Math.round(maxHeight) - Math.round(scaledHeight)) / 2) : 0
 	
 		// set image to canvas
-		image.scale(aspectRatio)
 		image.set({ top, left })
+		image.scaleToWidth(scaledWidth)
+		image.scaleToHeight(scaledHeight)
 		canvas.setBackgroundImage(image, () => canvas.renderAll())
 
 		// get image data url 

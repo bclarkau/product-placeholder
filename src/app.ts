@@ -9,25 +9,16 @@ app.get('/', (req, res) => {
 	res.send('Generate an image')
 })
 
-app.get('/:width([0-9]+)', (req, res) => {
-	const { width } = req.params
-
-	getImageBuffer(
-		{ width: parseInt(width), height: parseInt(width) }, 
-		(buffer) => {
-			res.type('png').end(buffer)
-		}, 
-		(err) => {
-			res.status(500).type('png').end()
-		}
-	)
-})
-
-app.get('/:width([0-9]+)/:height([0-9]+)', (req, res) => {
+app.get('/:width([0-9]+)/:height([0-9]+)?', (req, res) => {
 	const { width, height } = req.params
+	const { p, padding } = req.query
 
 	getImageBuffer(
-		{ width: parseInt(width), height: parseInt(height) }, 
+		{ 
+			width: parseInt(width), 
+			height: parseInt(height || width), // if no height provided, use width
+			padding: parseInt(p as string || padding as string) || 0
+		}, 
 		(buffer) => {
 			res.type('png').end(buffer)
 		}, 
