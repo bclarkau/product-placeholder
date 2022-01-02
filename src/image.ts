@@ -1,9 +1,12 @@
 import { fabric } from 'fabric'
 
+import { images } from './assets'
+
 type GetImageBufferProps = {
 	width: number
 	height: number
 	padding: number
+	id: number | null
 	min?: number
 	max?: number
 }
@@ -17,14 +20,15 @@ type GetImageBufferErrorProps = {
 }
 
 export const getImageBuffer = (
-	{ width, height, padding, min = 100, max = 1000 }: GetImageBufferProps, 
+	{ width, height, padding, id, min = 100, max = 1000 }: GetImageBufferProps, 
 	onDone: GetImageBufferCallbackProps, 
 	onError: GetImageBufferErrorProps
 ) => {
 
 	const { canvas, maxWidth, maxHeight } = getCanvas({ width, height, min, max })
+	const filename = getImageFilename(id)
 
-	fabric.Image.fromURL(`file://${__dirname}/assets/1.png`, (image: fabric.Image) => {
+	fabric.Image.fromURL(`file://${__dirname}/assets/${filename}`, (image: fabric.Image) => {
 		const { width: imgWidth, height: imgHeight } = image
 
 		if(!imgWidth || !imgHeight) {
@@ -90,4 +94,17 @@ const getCanvas = ({ width, height, min, max }: GetCanvasProps) => {
 		maxHeight,
 		canvas: new fabric.StaticCanvas(null, { width: maxWidth, height: maxHeight })
 	}
+}
+
+const getImageFilename = (id: number | null) => {
+	// if the ID matches a valid image, return the filename
+	if(id && (id >= 1 || id <= images.length)) {
+		return images.find(img => img.id === id)?.filename
+	}
+
+	// otherwise return a random one
+	const min = 0
+	const max = Math.floor(images.length - 1)
+	const index = Math.floor(Math.random() * (max - min + 1)) + min
+	return images[index].filename
 }
