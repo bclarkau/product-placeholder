@@ -30,18 +30,29 @@ export const getImageBuffer = (
 		if(!imgWidth || !imgHeight) {
 			return onError('Image could not be loaded')
 		}
-	
-		// calculate image size and position
-		const scale = Math.min(maxWidth / imgWidth, maxHeight / imgHeight)
-		const scaledWidth = (imgWidth * scale) - (padding * 2)
-		const scaledHeight = (imgHeight * scale) - (padding * 2)
-		const left = (maxWidth > scaledWidth) ? ((Math.round(maxWidth) - Math.round(scaledWidth)) / 2) : 0
-		const top = (maxHeight > scaledHeight) ? ((Math.round(maxHeight) - Math.round(scaledHeight)) / 2) : 0
-	
-		// set image to canvas
-		image.set({ top, left })
-		image.scaleToWidth(scaledWidth)
-		image.scaleToHeight(scaledHeight)
+		
+		// set image to center of canvas
+		const center = canvas.getCenter()
+		image.set({ 
+			top: center.top, 
+			left: center.left,
+			originX: 'center',
+			originY: 'center' 
+		})
+
+		// scale image according to canvas dimensions and any padding
+		const imgAspectRatio = imgWidth / imgHeight
+		const canvasAspectRatio = maxWidth / maxHeight
+		if(imgAspectRatio <= canvasAspectRatio) {
+			if(imgHeight > maxHeight) {
+				image.scaleToHeight(maxHeight - padding * 2)
+			}
+		} else {
+			if(imgWidth > maxWidth) {
+				image.scaleToWidth(maxWidth - padding * 2)
+			}
+		}
+
 		canvas.setBackgroundImage(image, () => canvas.renderAll())
 
 		// get image data url 
