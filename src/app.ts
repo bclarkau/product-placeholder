@@ -3,7 +3,7 @@ import express from 'express'
 import { getImageBuffer } from './image'
 
 const app = express()
-const port = 3000
+const port = process.env.PORT || 3000
 
 app.get('/', (req, res) => {
 	res.send('Generate an image')
@@ -30,5 +30,5 @@ app.get('/:width([0-9]+)/:height([0-9]+)?', (req, res) => {
 })
 
 app.listen(port, () => {
-	console.log(`Example app listening at http://localhost:${port}`)
+	console.log(`App running on port ${port}`)
 })
