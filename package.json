@@ -10,7 +10,8 @@
     "watch": "tsc --watch & npx nodemon dist/app",
     "build": "tsc",
     "postbuild": "shx cp -r src/assets dist",
-    "clean": "shx rm -rf dist && yarn build"
+    "clean": "shx rm -rf dist && yarn build",
+    "start": "node dist/app"
   },
   "dependencies": {
     "express": "^4.17.1",
