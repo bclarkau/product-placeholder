@@ -1,10 +1,8 @@
 import express from 'express'
-
 import { getImageBuffer } from './image'
 import { images } from './assets'
 
 const app = express()
-const port = process.env.PORT || 3000
 
 app.get('/', (req, res) => {
 	res.redirect('https://www.productplaceholder.com');
@@ -34,6 +32,4 @@ app.get('/:width([0-9]+)/:height([0-9]+)?', (req, res) => {
 	)
 })
 
-app.listen(port, () => {
-	console.log(`App running on port ${port}`)
-})
+export default app

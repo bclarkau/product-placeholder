@@ -1,5 +1,4 @@
 import { fabric } from 'fabric'
-
 import { images } from './assets'
 
 type GetImageBufferProps = {

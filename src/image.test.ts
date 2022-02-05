@@ -1,43 +1,20 @@
 import { fabric } from 'fabric'
 
-import { getImageBuffer, getCanvas, getImageFilename } from '../src/image'
+import { getImageBuffer, getCanvas, getImageFilename } from './image'
 
 describe('Image generation', () => {
 
 	it('generates a PNG buffer', done => {
 		getImageBuffer(
-			{ width: 100, height: 100 },
-			(buffer) => {
-				expect(buffer).toBeDefined()
-				expect(buffer).toBeInstanceOf(Buffer)
-				expect(buffer.byteLength).toBeGreaterThan(0)
-				expect(buffer.byteLength).toBeLessThan(1000)
-				done()
-			}
-		)
-	})
-
-	it('generates a PNG buffer with padding', done => {
-		getImageBuffer(
-			{ width: 100, height: 100, padding: 20 },
+			{ width: 100, height: 100, padding: 0, id: null },
 			(buffer) => {
 				expect(buffer).toBeDefined()
 				expect(buffer).toBeInstanceOf(Buffer)
 				done()
-			}
+			},
+			() => {}
 		)
-	})
-
-	it('generates a PNG buffer with specified ID', done => {
-		getImageBuffer(
-			{ width: 100, height: 100, id: 2 },
-			(buffer) => {
-				expect(buffer).toBeDefined()
-				expect(buffer).toBeInstanceOf(Buffer)
-				done()
-			}
-		)
-	})
+	}, 15000)
 
 })
 
@@ -63,7 +40,7 @@ describe('Asset filename', () => {
 	})
 
 	it('returns a random filename', () => {
-		const filename = getImageFilename()
+		const filename = getImageFilename(null)
 		expect(filename).toMatch(/\d+\.png/)
 	})
 
