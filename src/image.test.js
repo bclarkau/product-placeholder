@@ -2,6 +2,45 @@ import { fabric } from 'fabric'
 
 import { getImageBuffer, getCanvas, getImageFilename } from '../src/image'
 
+describe('Image generation', () => {
+
+	it('generates a PNG buffer', done => {
+		getImageBuffer(
+			{ width: 100, height: 100 },
+			(buffer) => {
+				expect(buffer).toBeDefined()
+				expect(buffer).toBeInstanceOf(Buffer)
+				expect(buffer.byteLength).toBeGreaterThan(0)
+				expect(buffer.byteLength).toBeLessThan(1000)
+				done()
+			}
+		)
+	})
+
+	it('generates a PNG buffer with padding', done => {
+		getImageBuffer(
+			{ width: 100, height: 100, padding: 20 },
+			(buffer) => {
+				expect(buffer).toBeDefined()
+				expect(buffer).toBeInstanceOf(Buffer)
+				done()
+			}
+		)
+	})
+
+	it('generates a PNG buffer with specified ID', done => {
+		getImageBuffer(
+			{ width: 100, height: 100, id: 2 },
+			(buffer) => {
+				expect(buffer).toBeDefined()
+				expect(buffer).toBeInstanceOf(Buffer)
+				done()
+			}
+		)
+	})
+
+})
+
 describe('Canvas creation', () => {
 
 	it('returns the canvas object', () => {
