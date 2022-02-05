@@ -85,7 +85,7 @@ type GetCanvasProps = {
 	max: number
 }
 
-const getCanvas = ({ width, height, min, max }: GetCanvasProps) => {
+export const getCanvas = ({ width, height, min, max }: GetCanvasProps) => {
 	const maxWidth = Math.max(min, Math.min(width, max))
 	const maxHeight = Math.max(min, Math.min(height, max))
 
@@ -96,7 +96,7 @@ const getCanvas = ({ width, height, min, max }: GetCanvasProps) => {
 	}
 }
 
-const getImageFilename = (id: number | null) => {
+export const getImageFilename = (id: number | null) => {
 	// if the ID matches a valid image, return the filename
 	if(id && (id >= 1 || id <= images.length)) {
 		return images.find(img => img.id === id)?.filename
