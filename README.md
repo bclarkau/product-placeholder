@@ -51,7 +51,7 @@ yarn && yarn watch
 ### Adding images
 
 1. Add PNG image files to the `src/assets` folder. 
-2. Add the image details to the [images index](https://github.com/bclarkau/product-placeholder/blob/main/src/assets/index.ts#L17). This list is used to keep track of author credit and license details.
+2. Add the image details to the [images index](https://github.com/bclarkau/product-placeholder/blob/main/src/assets.ts#L17). This list is used to keep track of author credit and license details.
 3. Rebuild the app to copy images to the `dist` folder 
 
 ``` 
